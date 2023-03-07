@@ -70,15 +70,23 @@ class FileStorage:
         -----------------------
         Deserializes the JSON file to __objects.
         """
+
         self.__objects = {}
         try:
+
             with open(self.__file_path,
-                      mode="r+", encoding="utf-8") as fd:
-                json_file = json.load(fd)
+
+                      mode="r", encoding="utf-8") as f:
+
+                json_file = json.load(f)
+
         except Exception as e:
+
             return
-        for key in json_file.keys():
+
+        for key, value in json_file.items():
             cls = json_file[key].pop("__class__", None)
+            print(cls)
             if cls not in self.__models.keys():
                 continue
-            self.__objects[key] = self.__models[cls](**json_file[key])
+            self.__objects[key] = self.__models[cls](**value)
