@@ -86,7 +86,6 @@ class FileStorage:
 
         for key, value in json_file.items():
             cls = json_file[key].pop("__class__", None)
-            print(cls)
             if cls not in self.__models.keys():
                 continue
             self.__objects[key] = self.__models[cls](**value)
