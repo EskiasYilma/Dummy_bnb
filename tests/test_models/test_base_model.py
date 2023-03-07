@@ -58,6 +58,7 @@ class TestBase_Init(unittest.TestCase):
 
     def test_kwargs(self):
         """Unittest for testing proper handling of kwargs"""
+
         kwargs = {"id": "12345", "created_at": "2023-01-15T01:30:40.000000",
                   "updated_at": "2023-01-15T01:30:45.000000",
                   "name": "BaseModel", "value": 1234}
