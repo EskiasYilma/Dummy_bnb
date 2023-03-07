@@ -45,8 +45,8 @@ class TestBase_Init(unittest.TestCase):
         self.assertNotEqual(updated_at, model.updated_at)
 
     def test_to_dict(self):
-        """Unittest for testing the to_dict method returns a dictionary and all\
-                requiered elements are presented"""
+        """Unittest for testing the to_dict method returns a dictionary\
+                and all requiered elements are presented"""
 
         model = BaseModel()
         dict_model = model.to_dict()
@@ -59,11 +59,13 @@ class TestBase_Init(unittest.TestCase):
     def test_kwargs(self):
         """Unittest for testing proper handling of kwargs"""
         kwargs = {"id": "12345", "created_at": "2023-01-15T01:30:40.000000",
-                  "updated_at": "2023-01-15T01:30:45.000000", "name": "BaseModel", "value": 1234}
+                  "updated_at": "2023-01-15T01:30:45.000000",
+                  "name": "BaseModel", "value": 1234}
         model = BaseModel(**kwargs)
         self.assertEqual(model.id, kwargs["id"])
-        self.assertEqual(model.created_at, datetime.strptime(kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f"))
-        self.assertEqual(model.updated_at, datetime.strptime(kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f"))
+        self.assertEqual(model.created_at, datetime.strptime(
+            kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f"))
+        self.assertEqual(model.updated_at, datetime.strptime(
+            kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f"))
         self.assertEqual(model.__dict__["name"], kwargs["name"])
         self.assertEqual(model.__dict__["value"], kwargs["value"])
-
