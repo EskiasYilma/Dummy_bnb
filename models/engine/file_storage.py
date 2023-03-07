@@ -78,7 +78,7 @@ class FileStorage:
         except Exception as e:
             return
         for key in json_file.keys():
-            cls = json_file[k].pop("__class__", None)
+            cls = json_file[key].pop("__class__", None)
             if cls not in self.__models.keys():
                 continue
-            self.__objects[k] = self.__models[cls](**json_file[k])
+            self.__objects[key] = self.__models[cls](**json_file[key])

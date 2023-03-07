@@ -7,7 +7,7 @@ Base Model Docstring
 
 import uuid
 from datetime import datetime
-import os, sys
+import os
 import models
 
 
@@ -34,7 +34,9 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
-                        value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                        value = datetime.strptime(
+                                                    value,
+                                                    '%Y-%m-%dT%H:%M:%S.%f')
                     setattr(self, key, value)
             if 'id' not in kwargs:
                 self.id = str(uuid.uuid4())
@@ -67,7 +69,6 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
-
 
     def to_dict(self):
         """
