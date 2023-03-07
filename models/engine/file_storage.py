@@ -73,19 +73,14 @@ class FileStorage:
 
         self.__objects = {}
         try:
-
             with open(self.__file_path,
-
                       mode="r", encoding="utf-8") as f:
-
                 json_file = json.load(f)
-
         except Exception as e:
-
             return
 
         for key, value in json_file.items():
-            cls = json_file[key].pop("__class__", None)
+            cls = value.pop("__class__", None)
             if cls not in self.__models.keys():
                 continue
             self.__objects[key] = self.__models[cls](**value)
