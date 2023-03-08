@@ -17,8 +17,8 @@ class HBNBCommand(cmd.Cmd):
 	Defines the entry point of the command interpreter
 	"""
 	__all_models = {"BaseModel": BaseModel}
-
 	prompt = "(hbnb) "
+
 	def do_quit(self, arg):
 		"""Quit command to exit the program\n"""
 		return True
@@ -28,6 +28,7 @@ class HBNBCommand(cmd.Cmd):
 		return True
 
 	def emptyline(self):
+		"""an empty line + ENTER shouldn’t execute anything"""
 		pass
 
 	def do_create(self, arg):
@@ -46,8 +47,7 @@ class HBNBCommand(cmd.Cmd):
 			print("** class name missing **")
 
 	def do_show(self, arg):
-		"""
-		test
+		"""Prints the string representation of an instance based on the class name and id. Ex: $ show BaseModel
 		"""
 		objects = {}
 		if arg:
@@ -57,10 +57,13 @@ class HBNBCommand(cmd.Cmd):
 				if cls not in self.__all_models.keys():
 					print("** class doesn't exist **")
 				if id not in [y.id for x, y in storage.all().items()]:
-					# print(self.__all_models[cls].__objects)
-					for i,j in storage.all().items():
-						print(i, j)
-
+					print("** no instance found **")
+				else:
+					all_objs = storage.all()
+					for obj_id, obj_val in all_objs.items():
+						if str(id) == str(obj_val.id):
+							obj = all_objs[obj_id]
+							print(obj)
 
 			if len(str(arg).split(" ")) == 1:
 				cls = str(arg).split(" ")[0]
@@ -73,7 +76,24 @@ class HBNBCommand(cmd.Cmd):
 		else:
 			print("** class name missing **")
 
-
+	def do_all(self, arg):
+		objects = {}
+		if arg:
+			if len(str(arg).split(" ")) > 1:
+				print("incorrect")
+			if len(str(arg).split(" ")) == 1:
+				cls = str(arg).split(" ")[0]
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				else:
+					all_objs = storage.all()
+					for obj_id in all_objs.keys():
+						if cls == obj_id.split(".")[0]:
+							obj = all_objs[obj_id]
+							print(obj)
+		else:
+			all_objs = storage.all()
+			print([str(val) for obj, val in all_objs.items()])
 
 
 if __name__ == '__main__':
