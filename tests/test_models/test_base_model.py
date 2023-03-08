@@ -112,11 +112,11 @@ class Test_BaseModel(unittest.TestCase):
         self.model2.save()
         self.assertNotEqual(old_time, self.model2.updated_at)
 
-    def test_to_json(self):
-        jsonified = self.model2.to_json()
+    def test_to_dict(self):
+        jsonified = self.model2.to_dict()
         self.assertNotEqual(self.model2.__dict__, jsonified)
         self.assertNotIsInstance(jsonified["created_at"], datetime)
         self.assertNotIsInstance(jsonified["updated_at"], datetime)
-        self.assertEqual(jsonified["created_at"], '2023-03-08 19:30:48.436849')
+        self.assertEqual(jsonified["created_at"], '2023-03-08T19:30:48.436849')
         self.assertTrue(hasattr(jsonified, "__class__"))
         self.assertEqual(jsonified["__class__"], "BaseModel")
