@@ -60,7 +60,7 @@ class FileStorage:
         obj_dict = {}
         for i, j in self.__objects.items():
             obj_dict[i] = j.to_dict()
-        with open(self.__file_path, 'r+', encoding='utf-8') as f:
+        with open(self.__file_path, 'w', encoding='utf-8') as f:
             json.dump(obj_dict, f)
 
 

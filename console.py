@@ -49,11 +49,9 @@ class HBNBCommand(cmd.Cmd):
 	def do_show(self, arg):
 		"""Prints the string representation of an instance based on the class name and id. Ex: $ show BaseModel
 		"""
-		objects = {}
 		if arg:
 			if len(str(arg).split(" ")) == 2:
 				cls, id = str(arg).split(" ")
-				# id = str(arg).split(" ")[1]
 				if cls not in self.__all_models.keys():
 					print("** class doesn't exist **")
 				if id not in [y.id for x, y in storage.all().items()]:
@@ -67,7 +65,6 @@ class HBNBCommand(cmd.Cmd):
 
 			if len(str(arg).split(" ")) == 1:
 				cls = str(arg).split(" ")[0]
-				# id = str(arg).split(" ")[1]
 				if cls not in self.__all_models.keys():
 					print("** class doesn't exist **")
 				else:
@@ -77,10 +74,10 @@ class HBNBCommand(cmd.Cmd):
 			print("** class name missing **")
 
 	def do_all(self, arg):
-		objects = {}
+		"""Prints all string representation of all instances based or not on the class name\n\nUsage: all <model_name>\n       all\n"""
 		if arg:
 			if len(str(arg).split(" ")) > 1:
-				print("incorrect")
+				return
 			if len(str(arg).split(" ")) == 1:
 				cls = str(arg).split(" ")[0]
 				if cls not in self.__all_models.keys():
@@ -94,6 +91,35 @@ class HBNBCommand(cmd.Cmd):
 		else:
 			all_objs = storage.all()
 			print([str(val) for obj, val in all_objs.items()])
+
+	def do_destroy(self, arg):
+		"""Deletes an instance based on the class name and id (save the change into the JSON file\n\nUsage: destroy <model_name> <id>"""
+		if arg:
+			if len(str(arg).split(" ")) == 2:
+				cls, id = str(arg).split(" ")
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				if id not in [y.id for x, y in storage.all().items()]:
+					print("** no instance found **")
+				else:
+					all_objs = storage.all()
+					for obj_id, obj_val in all_objs.items():
+						if str(id) == str(obj_val.id):
+							all_objs.pop(obj_id)
+							break
+					storage.save()
+					storage.reload()
+
+			if len(str(arg).split(" ")) == 1:
+				cls = str(arg).split(" ")[0]
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				else:
+					print("** instance id missing **")
+		else:
+			print("** class name missing **")
+
+
 
 
 if __name__ == '__main__':
