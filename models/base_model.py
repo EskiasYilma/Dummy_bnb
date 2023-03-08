@@ -30,16 +30,23 @@ class BaseModel:
         be updated every time you change
         """
         if kwargs:
+            id_exists = 0
+            created_at_exists = 0
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
-                        value = datetime.strptime(
+                        if key == "created_at":
+                            created_at_exists = 1
+                        if not isinstance(value, datetime):
+                            value = datetime.strptime(
                                                     value,
                                                     '%Y-%m-%dT%H:%M:%S.%f')
+                    if key == 'id':
+                        id_exists = 1
                     setattr(self, key, value)
-            if 'id' not in kwargs:
+            if id_exists == 0:
                 self.id = str(uuid.uuid4())
-            if 'created_at' not in kwargs:
+            if created_at_exists == 0:
                 self.created_at = datetime.now()
         else:
             self.id = str(uuid.uuid4())

@@ -3,6 +3,7 @@
 Unittest for Base class
 """
 import os
+import uuid
 import unittest
 import json
 from models.base_model import BaseModel
@@ -75,7 +76,6 @@ from datetime import datetime
 # Sample Tests
 
 
-
 class Test_BaseModel(unittest.TestCase):
     """
     Test the base model class
@@ -86,9 +86,9 @@ class Test_BaseModel(unittest.TestCase):
 
         test_args = {'created_at': datetime(2023, 3, 8, 19, 30, 48, 436849),
                      'updated_at': datetime(2023, 3, 8, 19, 30, 48, 436966),
-                     'id': 'eab0171e-dfeb-49e8-afc4-65a864ddada2',
+                     'id': 'd42f98a5-71d3-4237-83f3-f480c9dc3c18',
                      'name': 'model1'}
-        self.model2 = BaseModel(test_args)
+        self.model2 = BaseModel(**test_args)
         self.model2.save()
 
     def test_instantiation(self):
@@ -100,7 +100,7 @@ class Test_BaseModel(unittest.TestCase):
     def test_reinstantiation(self):
         self.assertIsInstance(self.model2, BaseModel)
         self.assertEqual(self.model2.id,
-                         'eab0171e-dfeb-49e8-afc4-65a864ddada2')
+                         'd42f98a5-71d3-4237-83f3-f480c9dc3c18')
         self.assertEqual(self.model2.created_at,
                          datetime(2023, 3, 8, 19, 30, 48, 436849))
 
