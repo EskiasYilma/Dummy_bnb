@@ -1,12 +1,12 @@
-# #!/usr/bin/python3
-# """
-# Unittest for Base class
-# """
-# import os
-# import unittest
-# import json
-# from models.base_model import BaseModel
-# from datetime import datetime
+#!/usr/bin/python3
+"""
+Unittest for Base class
+"""
+import os
+import unittest
+import json
+from models.base_model import BaseModel
+from datetime import datetime
 
 
 # class TestBase_Init(unittest.TestCase):
@@ -70,3 +70,53 @@
 #             kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f"))
 #         self.assertEqual(model.__dict__["name"], kwargs["name"])
 #         self.assertEqual(model.__dict__["value"], kwargs["value"])
+
+
+# Sample Tests
+
+
+
+class Test_BaseModel(unittest.TestCase):
+    """
+    Test the base model class
+    """
+
+    def setUp(self):
+        self.model1 = BaseModel()
+
+        test_args = {'created_at': datetime(2023, 3, 8, 19, 30, 48, 436849),
+                     'updated_at': datetime(2023, 3, 8, 19, 30, 48, 436966),
+                     'id': 'eab0171e-dfeb-49e8-afc4-65a864ddada2',
+                     'name': 'model1'}
+        self.model2 = BaseModel(test_args)
+        self.model2.save()
+
+    def test_instantiation(self):
+        self.assertIsInstance(self.model1, BaseModel)
+        self.assertTrue(hasattr(self.model1, "created_at"))
+        self.assertTrue(hasattr(self.model1, "id"))
+        self.assertFalse(hasattr(self.model1, "updated_at"))
+
+    def test_reinstantiation(self):
+        self.assertIsInstance(self.model2, BaseModel)
+        self.assertEqual(self.model2.id,
+                         'eab0171e-dfeb-49e8-afc4-65a864ddada2')
+        self.assertEqual(self.model2.created_at,
+                         datetime(2023, 3, 8, 19, 30, 48, 436849))
+
+    def test_save(self):
+        self.assertFalse(hasattr(self.model1, "updated_at"))
+        self.model1.save()
+        self.assertTrue(hasattr(self.model1, "updated_at"))
+        old_time = self.model2.updated_at
+        self.model2.save()
+        self.assertNotEqual(old_time, self.model2.updated_at)
+
+    def test_to_json(self):
+        jsonified = self.model2.to_json()
+        self.assertNotEqual(self.model2.__dict__, jsonified)
+        self.assertNotIsInstance(jsonified["created_at"], datetime)
+        self.assertNotIsInstance(jsonified["updated_at"], datetime)
+        self.assertEqual(jsonified["created_at"], '2023-03-08 19:30:48.436849')
+        self.assertTrue(hasattr(jsonified, "__class__"))
+        self.assertEqual(jsonified["__class__"], "BaseModel")
