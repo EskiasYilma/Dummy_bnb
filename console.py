@@ -7,8 +7,15 @@ Defines the entry point of the command interpreter
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.review import Review
+from models.place import Place
+from models.city import City
+from models.amenity import Amenity
 from models.engine.file_storage import FileStorage
 from models import storage
+from datetime import datetime
 
 class HBNBCommand(cmd.Cmd):
 	"""
@@ -16,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
 
 	Defines the entry point of the command interpreter
 	"""
-	__all_models = {"BaseModel": BaseModel}
+	__all_models = {"BaseModel": BaseModel, "User":User, "State":State, "Review":Review, "Place":Place, "City":City, "Amenity":Amenity}
 	prompt = "(hbnb) "
 
 	def do_quit(self, arg):
@@ -38,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
 
 		if arg:
 			if str(arg) in self.__all_models.keys():
-				model = BaseModel()
+				model = self.__all_models[arg]()
 				model.save()
 				print(model.id)
 			else:
@@ -128,15 +135,15 @@ class HBNBCommand(cmd.Cmd):
 					print("** class doesn't exist **")
 				if id not in [y.id for x, y in storage.all().items()]:
 					print("** no instance found **")
-
+					return
 				else:
 					all_objs = storage.all()
 					for obj_id, obj_val in all_objs.items():
 						if str(id) == str(obj_val.id):
 							setattr(obj_val, attr_nm, attr_val)
-							break
-					storage.save()
-					storage.reload()
+							setattr(obj_val, "updated_at", datetime.now())
+							storage.save()
+							return
 
 			if len(str(arg).split(" ")) == 3:
 				cls, id, attr_nm = str(arg).split(" ")
