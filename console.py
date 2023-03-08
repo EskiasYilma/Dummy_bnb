@@ -119,7 +119,51 @@ class HBNBCommand(cmd.Cmd):
 		else:
 			print("** class name missing **")
 
+	def do_update(self, arg):
+		"""Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file"""
+		if arg:
+			if len(str(arg).split(" ")) == 4:
+				cls, id, attr_nm, attr_val = str(arg).split(" ")
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				if id not in [y.id for x, y in storage.all().items()]:
+					print("** no instance found **")
 
+				else:
+					all_objs = storage.all()
+					for obj_id, obj_val in all_objs.items():
+						if str(id) == str(obj_val.id):
+							setattr(obj_val, attr_nm, attr_val)
+							break
+					storage.save()
+					storage.reload()
+
+			if len(str(arg).split(" ")) == 3:
+				cls, id, attr_nm = str(arg).split(" ")
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				if id not in [y.id for x, y in storage.all().items()]:
+					print("** no instance found **")
+				else:
+					print("** value missing **")
+
+			if len(str(arg).split(" ")) == 2:
+				cls, id = str(arg).split(" ")
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				if id not in [y.id for x, y in storage.all().items()]:
+					print("** no instance found **")
+				else:
+					print("** attribute name missing **")
+
+			if len(str(arg).split(" ")) == 1:
+				cls = str(arg).split(" ")[0]
+				if cls not in self.__all_models.keys():
+					print("** class doesn't exist **")
+				else:
+					print("** instance id missing **")
+		else:
+			print("** class name missing **")
 
 
 if __name__ == '__main__':
