@@ -25,6 +25,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'city_id'))
         self.assertEqual(place.city_id, "")
+        self.assertIsInstance(place.city_id, str)
 
     def test_user_id(self):
         """Unittest for testing if Place class has user_id attribute\
@@ -32,6 +33,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, "user_id"))
         self.assertEqual(place.user_id, "")
+        self.assertIsInstance(place.city_id, str)
 
     def test_name(self):
         """Unittest for testing if Place class has name attribute\
@@ -39,6 +41,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'name'))
         self.assertEqual(place.name, "")
+        self.assertIsInstance(place.name, str)
 
     def test_description(self):
         """Unittest for testing if Place class has description attribute\
@@ -46,6 +49,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'description'))
         self.assertEqual(place.description, "")
+        self.assertIsInstance(place.description, str)
 
     def test_number_rooms(self):
         """Unittest for testing if Place class has number_rooms attribute\
@@ -53,6 +57,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'number_rooms'))
         self.assertEqual(place.number_rooms, 0)
+        self.assertIsInstance(place.number_rooms, int)
 
     def test_bathrooms(self):
         """Unittest for testing if Place class has number_bathrooms attribute\
@@ -60,6 +65,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'number_bathrooms'))
         self.assertEqual(place.number_bathrooms, 0)
+        self.assertIsInstance(place.number_bathrooms, int)
 
     def test_max_guest(self):
         """Unittest for testing if Place class has max_guest attribute\
@@ -67,6 +73,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'max_guest'))
         self.assertEqual(place.max_guest, 0)
+        self.assertIsInstance(place.max_guest, int)
 
     def price_by_night(self):
         """Unittest for testing if Place class has price_by_night attribute\
@@ -74,6 +81,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'price_by_night'))
         self.assertEqual(place.price_by_night, 0)
+        self.assertIsInstance(place.price_by_night, int)
 
     def test_latitude(self):
         """Unittest for testing if Place class has latitude attribute\
@@ -81,6 +89,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'latitude'))
         self.assertEqual(place.latitude, 0)
+        self.assertIsInstance(place.latitude, float)
 
     def test_longitude(self):
         """Unittest for testing if Place class has longitude attribute\
@@ -88,6 +97,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'longitude'))
         self.assertEqual(place.longitude, 0)
+        self.assertIsInstance(place.longitude, float)
 
     def test_amenity_ids(self):
         """Unittest for testing if Place class has amenity_ids attribute\
@@ -95,6 +105,7 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, 'amenity_ids'))
         self.assertEqual(place.amenity_ids, [])
+        self.assertIsInstance(place.amenity_ids, list)
 
     def test_save(self):
         """Unittest for testing if Place class's save method works properly"""
