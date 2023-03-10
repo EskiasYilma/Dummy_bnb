@@ -52,7 +52,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
 
-
     def __str__(self):
         """
         __str__ Function Docstring
@@ -82,7 +81,9 @@ class BaseModel:
         """
         res = self.__dict__.copy()
         res['__class__'] = self.__class__.__name__
-        dates = {'created_at': self.created_at, 'updated_at': self.updated_at}
+        dates = {'created_at': self.created_at}
         for i, j in dates.items():
             res[str(i)] = j.isoformat()
+        if ("updated_at" in res):
+            res["updated_at"] = self.updated_at.isoformat()
         return res
